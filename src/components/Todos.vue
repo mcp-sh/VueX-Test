@@ -1,6 +1,6 @@
 <template>
   <div class="todos">
-      <div v-for="todo in allTodos" :key="todo.id" class="todo">{{ todo.title }}</div>
+      <div v-for="todo in openTodos" :key="todo.id" class="todo">{{ todo.title }}</div>
   </div>
 </template>
 
@@ -9,7 +9,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
     name: "Todos", 
     computed: {
-        ...mapGetters(['allTodos'])
+        ...mapGetters(['allTodos', 'openTodos'])
     },
     methods: {
         ...mapActions(['getTodos'])
@@ -22,12 +22,18 @@ export default {
 
 <style scoped>
     .todos {
-        width: 80%;
-        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 1rem;
+        margin-top: 2rem;
     }
     .todo {
-        padding: 10px 20px;
-        margin: 0.5rem 2rem;
+        border: 1px solid #ccc;
+        background: #41b883;
+        padding: 1rem;
+        border-radius: 5px;
+        text-align: center;
+        position: relative;
     }
 
 </style>
