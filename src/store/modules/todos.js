@@ -23,20 +23,29 @@ const state = {
 const getters = {
     allTodos : state => {
         return state.todos
-    }
+    }, 
+    openTodos: state => state.todos.filter(todo => todo.completed === false)
 };
 
 const mutations = {
     populateTodos(state, todos) {
         state.todos = todos
+    },
+    newTodo(state, todo) {
+        state.todos.unshift(todo)
     }
+
 };
 
 const actions = {
     async getTodos({ commit }) {
         const response = await axios.get('http://localhost:3000/todos');
-        console.log(response.data)
+        // console.log(response.data)
         commit('populateTodos', response.data)
+    },
+    async addTodo({ commit }, payload) {
+        const response = await axios.post('http://localhost:3000/todos', {title: payload, completed: false});
+        commit('newTodo', response.data)
     }
 };
 
